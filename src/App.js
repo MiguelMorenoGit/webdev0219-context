@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CounterProvider, {withCounter} from './services/CounterProvider';
+import MiddleComponent from './components/MiddleComponent';
+import PokemonList from './components/PokemonList';
+// import {withRouter} from 'react-router-dom'
+
+
+const Navbar = (props) => {
+  return (
+    <nav>
+      <h1>{props.title}</h1>
+      <ul>
+        <li>Home</li>
+        <li>Favoritos: {props.counter}</li>
+      </ul>
+    </nav>
+  )
+}
+
+const NavbarWithCounter = withCounter(Navbar);
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <CounterProvider>
+          <MiddleComponent/>
+          <NavbarWithCounter title="Navbar" />
+          <PokemonList />
+        </CounterProvider>
       </div>
     );
   }
